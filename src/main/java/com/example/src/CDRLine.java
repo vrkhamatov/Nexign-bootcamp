@@ -29,11 +29,11 @@ public class CDRLine {
                 '}';
     }
 
-    private String callType;
-    private String number;
-    private LocalDateTime startTime;
-    private LocalDateTime endTime;
-    private String tariffType;
+    public   String callType;
+    public   String number;
+    public   LocalDateTime startTime;
+    public   LocalDateTime endTime;
+    public     String tariffType;
 
     public CDRLine(String callType, String number, LocalDateTime startTime, LocalDateTime endTime, String tariffType){
         this.callType = callType;
@@ -46,6 +46,11 @@ public class CDRLine {
     public String getNumber(){
         return this.number;
     }
+
+    public String getCallType(){
+        return this.callType;
+    }
+
 
 
 

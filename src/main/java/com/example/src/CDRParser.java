@@ -20,6 +20,7 @@ public class CDRParser {
 
             while (line != null) {
                 CDRLine cdrLine = txtParser.makeCDRLineFromTxt(line);
+                UserRent userRent = new UserRent(cdrLine);
                 List<CDRLine> listOfCalls = new ArrayList<>();
 
                 if (mapOfNumbersAndReferences.get(cdrLine.getNumber()) == null) {
