@@ -118,9 +118,9 @@ public class UserRent {
             return cost;
         }
         else if (Objects.equals(tariffType, "06")){
-            if (min<=300) cost = 100;
+            if (min<=300) cost = 0;
             else
-                cost = 100 + (min-300);
+                cost = (min-300);
         }
         else
         {
