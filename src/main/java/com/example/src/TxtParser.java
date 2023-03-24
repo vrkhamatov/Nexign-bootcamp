@@ -4,11 +4,6 @@ import java.time.LocalDateTime;
 
 public class TxtParser {
 
-    @Override
-    public String toString() {
-        return super.toString();
-    }
-
     public CDRLine makeCDRLineFromTxt(String line) {
         String callType = line.substring(0, 2);
         String number = line.substring(4, 15);

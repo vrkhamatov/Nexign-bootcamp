@@ -38,20 +38,21 @@ public class CDRLine {
         int minutesEnd = cdrLine.getEndTime().getMinute();
         int secondsEnd = cdrLine.getEndTime().getSecond();
 
-        LocalTime localTimeStart = LocalTime.of(hoursStart,minutesStart,secondsStart);
-        LocalTime localTimeEnd = LocalTime.of(hoursEnd,minutesEnd,secondsEnd);
-        LocalTime forMidNight = LocalTime.of(23,59,59);
-        LocalTime afterMidNight = LocalTime.of(0,0,0);
+        LocalTime localTimeStart = LocalTime.of(hoursStart, minutesStart, secondsStart);
+        LocalTime localTimeEnd = LocalTime.of(hoursEnd, minutesEnd, secondsEnd);
+        LocalTime forMidnight = LocalTime.of(23, 59, 59);
+        LocalTime afterMidnight = LocalTime.of(0, 0, 0);
+
         Duration timeForMidnight;
         Duration timeAfterMidnight;
         Duration oneSec = Duration.ofSeconds(1);
-        if (cdrLine.getStartTime().getDayOfMonth() != cdrLine.getEndTime().getDayOfMonth()){
-            timeForMidnight = Duration.between(localTimeStart,forMidNight);
+
+        if (cdrLine.getStartTime().getDayOfMonth() != cdrLine.getEndTime().getDayOfMonth()) {
+            timeForMidnight = Duration.between(localTimeStart, forMidnight);
             timeForMidnight = timeForMidnight.plus(oneSec);
-            timeAfterMidnight = Duration.between(afterMidNight,localTimeEnd);
+            timeAfterMidnight = Duration.between(afterMidnight, localTimeEnd);
             return timeForMidnight.plus(timeAfterMidnight);
-        }
-            else {
+        } else {
             return Duration.between(localTimeStart, localTimeEnd);
         }
     }
@@ -71,13 +72,7 @@ public class CDRLine {
 
     @Override
     public String toString() {
-        return "CDRLine{" +
-                "callType='" + callType + '\'' +
-                ", number='" + number + '\'' +
-                ", startTime=" + startTime +
-                ", endTime=" + endTime +
-                ", tariffType='" + tariffType + '\'' +
-                '}';
+        return "CDRLine{" + "callType='" + callType + '\'' + ", number='" + number + '\'' + ", startTime=" + startTime + ", endTime=" + endTime + ", tariffType='" + tariffType + '\'' + '}';
     }
 
     public String getTariffType() {
@@ -100,13 +95,13 @@ public class CDRLine {
     }
 
     public String getEndTimeFormatted() {
-        String DATE_FORMATTER= "yyyy-MM-dd HH:mm:ss";
+        String DATE_FORMATTER = "yyyy-MM-dd HH:mm:ss";
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATE_FORMATTER);
         return endTime.format(formatter);
     }
 
     public String getStartTimeFormatted() {
-        String DATE_FORMATTER= "yyyy-MM-dd HH:mm:ss";
+        String DATE_FORMATTER = "yyyy-MM-dd HH:mm:ss";
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATE_FORMATTER);
         return startTime.format(formatter);
     }
@@ -118,10 +113,5 @@ public class CDRLine {
     public String getCallType() {
         return this.callType;
     }
-
-
-
-
-
 
 }
