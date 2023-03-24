@@ -14,20 +14,19 @@ public class CDRParser {
             FileReader fr = new FileReader(file);
             BufferedReader reader = new BufferedReader(fr);
             String line = reader.readLine();
-            HashMap<String, List<UserRent>> mapOfNumbersAndReferences = new HashMap<>();
+            HashMap<String, List<CDRLine>> mapOfNumbersAndReferences = new HashMap<>();
             int q = 0;
             while (line != null) {
                 q = q +1;
                 CDRLine cdrLine = txtParser.makeCDRLineFromTxt(line);
-                UserRent userRent = new UserRent(cdrLine);
-                List<UserRent> listOfCalls = new ArrayList<>();
+                List<CDRLine> listOfCalls = new ArrayList<>();
 
                 if (mapOfNumbersAndReferences.get(cdrLine.getNumber()) == null) {
-                    listOfCalls.add(userRent);
+                    listOfCalls.add(cdrLine);
                     mapOfNumbersAndReferences.put(cdrLine.getNumber(), listOfCalls);
                 } else {
                     listOfCalls = mapOfNumbersAndReferences.get(cdrLine.getNumber());
-                    listOfCalls.add(userRent);
+                    listOfCalls.add(cdrLine);
                     mapOfNumbersAndReferences.put(cdrLine.getNumber(), listOfCalls);
                 }
                 line = reader.readLine();

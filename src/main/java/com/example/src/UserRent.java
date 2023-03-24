@@ -15,6 +15,8 @@ public class UserRent {
     private final Duration duration;
     private final String tariffType;
     private final Double cost;
+    private final Double summaryCost;
+
 
     public UserRent(CDRLine cdrLine) {
         this.callType = cdrLine.getCallType();
@@ -24,7 +26,9 @@ public class UserRent {
         this.tariffType = cdrLine.getTariffType();
         this.duration = makeDurationFromTime(cdrLine);
         this.cost = makeCost(tariffType,duration,callType);
+        this.summaryCost = this.getCost();
     }
+
 
     @Override
     public String toString() {
