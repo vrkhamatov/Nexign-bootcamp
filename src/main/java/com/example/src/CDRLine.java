@@ -5,6 +5,20 @@ import java.util.Objects;
 
 public class CDRLine {
 
+    private final String callType;
+    private final String number;
+    private final LocalDateTime startTime;
+    private final LocalDateTime endTime;
+    private final String tariffType;
+
+    public CDRLine(String callType, String number, LocalDateTime startTime, LocalDateTime endTime, String tariffType) {
+        this.callType = callType;
+        this.number = number;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.tariffType = tariffType;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -29,25 +43,23 @@ public class CDRLine {
                 '}';
     }
 
-    public   String callType;
-    public   String number;
-    public   LocalDateTime startTime;
-    public   LocalDateTime endTime;
-    public     String tariffType;
-
-    public CDRLine(String callType, String number, LocalDateTime startTime, LocalDateTime endTime, String tariffType){
-        this.callType = callType;
-        this.number = number;
-        this.startTime = startTime;
-        this.endTime = endTime;
-        this.tariffType = tariffType;
+    public String getTariffType() {
+        return tariffType;
     }
 
-    public String getNumber(){
+    public LocalDateTime getEndTime() {
+        return endTime;
+    }
+
+    public LocalDateTime getStartTime() {
+        return startTime;
+    }
+
+    public String getNumber() {
         return this.number;
     }
 
-    public String getCallType(){
+    public String getCallType() {
         return this.callType;
     }
 

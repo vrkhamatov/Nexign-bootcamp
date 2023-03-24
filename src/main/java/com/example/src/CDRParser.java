@@ -1,13 +1,13 @@
 package com.example.src;
 
 import java.io.*;
-import java.time.LocalDateTime;
 import java.util.*;
 
 public class CDRParser {
 
 
     public static void main(String[] args) {
+
         try {
             TxtParser txtParser = new TxtParser();
             File file = new File("src/main/java/com/example/src/cdr.txt");
@@ -35,8 +35,6 @@ public class CDRParser {
             FileMaker fileMaker = new FileMaker();
             fileMaker.output(mapOfNumbersAndReferences);
 
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }

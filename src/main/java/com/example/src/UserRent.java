@@ -8,6 +8,24 @@ import java.util.Objects;
 
 public class UserRent {
 
+    private final String callType;
+    private final String number;
+    private final LocalDateTime startTime;
+    private final LocalDateTime endTime;
+    private final Duration duration;
+    private final String tariffType;
+    private final Double cost;
+
+    public UserRent(CDRLine cdrLine) {
+        this.callType = cdrLine.getCallType();
+        this.number = cdrLine.getNumber();
+        this.startTime = cdrLine.getStartTime();
+        this.endTime = cdrLine.getEndTime();
+        this.tariffType = cdrLine.getTariffType();
+        this.duration = makeDurationFromTime(cdrLine);
+        this.cost = makeCost(tariffType,duration,callType);
+    }
+
     @Override
     public String toString() {
 
@@ -37,27 +55,27 @@ public class UserRent {
         return duration;
     }
 
+    public LocalDateTime getStartTime() {
+        return startTime;
+    }
 
     public String getDurationString() {
         long hours = duration.toHours();
         long minutes = duration.toMinutes() % 60;
         long seconds = duration.toSeconds() % 60;
-        String time = String.format("%02d:%02d:%02d", hours, minutes, seconds);
-        return time;
+        return String.format("%02d:%02d:%02d", hours, minutes, seconds);
     }
 
     public String getEndTimeFormatted() {
         String DATE_FORMATTER= "yyyy-MM-dd HH:mm:ss";
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATE_FORMATTER);
-        String formatDateTime = endTime.format(formatter);
-        return formatDateTime;
+        return endTime.format(formatter);
     }
 
     public String getStartTimeFormatted() {
         String DATE_FORMATTER= "yyyy-MM-dd HH:mm:ss";
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DATE_FORMATTER);
-        String formatDateTime = startTime.format(formatter);
-        return formatDateTime;
+        return startTime.format(formatter);
     }
 
     public String getNumber() {
@@ -66,53 +84,31 @@ public class UserRent {
 
 
 
-    private String callType;
-    private String number;
-    private LocalDateTime startTime;
-    private LocalDateTime endTime;
-    private Duration duration;
-    private String tariffType;
-    private Double cost;
-
-    public UserRent(CDRLine cdrLine) {
-        this.callType = cdrLine.callType;
-        this.number = cdrLine.number;
-
-        this.startTime = cdrLine.startTime;
-        this.endTime = cdrLine.endTime;
-        this.tariffType = cdrLine.tariffType;
-        this.duration = makeDurationFromTime(cdrLine);
-        this.cost = makeCost(tariffType,duration,callType);
-    }
-
     private Duration makeDurationFromTime(CDRLine cdrLine) {
-        int hoursStart = cdrLine.startTime.getHour();
-        int minutesStart = cdrLine.startTime.getMinute();
-        int secondsStart = cdrLine.startTime.getSecond();
 
-        int hoursEnd = cdrLine.endTime.getHour();
-        int minutesEnd = cdrLine.endTime.getMinute();
-        int secondsEnd = cdrLine.endTime.getSecond();
+        int hoursStart = cdrLine.getStartTime().getHour();
+        int minutesStart = cdrLine.getStartTime().getMinute();
+        int secondsStart = cdrLine.getStartTime().getSecond();
+
+        int hoursEnd = cdrLine.getEndTime().getHour();
+        int minutesEnd = cdrLine.getEndTime().getMinute();
+        int secondsEnd = cdrLine.getEndTime().getSecond();
 
         LocalTime localTimeStart = LocalTime.of(hoursStart,minutesStart,secondsStart);
         LocalTime localTimeEnd = LocalTime.of(hoursEnd,minutesEnd,secondsEnd);
 
-        Duration duration = Duration.between(localTimeStart,localTimeEnd);
-        String hms = String.format("%02d:%02d:%02d",
-                duration.toHours(),
-                duration.toMinutesPart(),
-                duration.toSecondsPart());
-
-        return duration;
+        return Duration.between(localTimeStart,localTimeEnd);
     }
 
     public double makeCost(String tariffType, Duration duration, String callType){
         double cost;
-        long sec = duration.getSeconds();;
+        long sec = duration.getSeconds();
         long min = (int)Math. ceil(sec/60);
+
         if (sec%60 != 0){
             min +=1;
         }
+
         if (Objects.equals(tariffType, "03")){
             cost = min * 1.5;
             return cost;
@@ -140,7 +136,4 @@ public class UserRent {
     }
 
 
-    public LocalDateTime getStartTime() {
-        return startTime;
-    }
 }
