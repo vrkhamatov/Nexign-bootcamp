@@ -23,7 +23,7 @@ public class FileMaker {
         while (iterator.hasNext()) {
             q = q +1;
             userRentList = userRentHashMap.get(iterator.next());
-            //Collections.sort(userRentList, Comparator.comparing(UserRent::getStartTime));
+            Collections.sort(userRentList, Comparator.comparing(UserRent::getStartTime));
             Double summaryCost = 0.0;
             File file = new File("reports\\" + q + ".txt");
             FileWriter writer = null;
